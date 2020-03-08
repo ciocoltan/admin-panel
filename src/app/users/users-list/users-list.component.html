@@ -1,0 +1,51 @@
+
+<mat-toolbar class="header">Hello {{currentUser.userName}}
+  <!-- <button mat-stroked-button (click)="logOut()">LogOut</button> -->
+</mat-toolbar>
+<mat-card>Simple card</mat-card>
+
+<mat-card-content>
+
+  <mat-toolbar class="example-header">
+    <button mat-button (click)="sidenav.toggle()">Side Menu</button>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side" opened class="sidenav">
+      Hello
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-container">
+
+      <mat-accordion *ngIf="userDataArray" class="accordion">
+        <mat-expansion-panel *ngFor="let user of userDataArray.result">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{user.first_name}} {{user.last_name}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{user.email}}
+            </mat-panel-description>
+            <button class="btn-edit" mat-stroked-button (click)="edituser(user.id,$event)">Edit</button>
+          </mat-expansion-panel-header>
+
+          <mat-list role="list">
+            <mat-list-item role="listitem">Name: {{user.first_name}}</mat-list-item>
+            <mat-list-item role="listitem">Last name: {{user.last_name}}</mat-list-item>
+            <mat-list-item role="listitem">Email: {{user.email}}</mat-list-item>
+            <mat-list-item role="listitem">Address: {{user.address}}</mat-list-item>
+            <mat-list-item role="listitem">Dob: {{user.dob}}</mat-list-item>
+            <mat-list-item role="listitem">Phone: {{user.phone}}</mat-list-item>
+            <mat-list-item role="listitem">Website: &#160; <a href="{{user.website}}">{{user.website}}</a>
+            </mat-list-item>
+          </mat-list>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-spinner *ngIf="!userDataArray"></mat-spinner>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <mat-toolbar class="example-footer">Footer</mat-toolbar>
+
+</mat-card-content>

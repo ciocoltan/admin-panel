@@ -1,0 +1,62 @@
+
+  <mat-card>
+    <mat-card-title>Simple card</mat-card-title>
+    <mat-card-content>
+    <form *ngIf="userForm" class="edit-form" [formGroup]="userForm">
+
+      <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-grid-tile class="user-edit-grid-list">
+
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>User name</mat-label>
+            <input matInput formControlName="first_name">
+          </mat-form-field>
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="last_name">
+          </mat-form-field>
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Gender</mat-label>
+            <input matInput formControlName="gender">
+          </mat-form-field>
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Dob</mat-label>
+            <input matInput formControlName="dob">
+          </mat-form-field>
+
+        </mat-grid-tile>
+        <mat-grid-tile class="user-edit-grid-list">
+
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Web site</mat-label>
+            <input matInput formControlName="website">
+          </mat-form-field>
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+          <!-- <mat-form-field class="edit-form-full-width">
+            <mat-label>Status</mat-label>
+            <input matInput formControlName="status">
+          </mat-form-field> -->
+
+        </mat-grid-tile>
+      </mat-grid-list>
+  </form>
+
+</mat-card-content>
+    <mat-card-actions>
+      <button  mat-stroked-button >Back</button>
+  <button  mat-stroked-button (click)="save()">Save</button>
+    </mat-card-actions>
+
+</mat-card>
+

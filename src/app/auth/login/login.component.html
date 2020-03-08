@@ -1,0 +1,37 @@
+<div class="login-container" [formGroup]="loginForm">
+  <mat-card class="login-form">
+    <mat-card-title>Log In</mat-card-title>
+    <mat-card-content>
+      <mat-form-field class="login-full-width" appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="Ex. pat@example.com" formControlName="email" required>
+        <mat-error
+          *ngIf="loginForm.controls.email.hasError('pattern') && !loginForm.controls.email.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="login-full-width" appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions class="btn-logIn">
+      <button mat-raised-button color="primary" (click)="login()" [disabled]="!loginForm.valid || loading">Login</button>
+
+    <button mat-raised-button color="primary" (click)="signIn()" *ngIf="!loading">Sign In</button>
+    </mat-card-actions>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  </mat-card>
+</div>
