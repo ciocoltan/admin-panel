@@ -1,7 +1,6 @@
-
-  <mat-card>
-    <mat-card-title>Simple card</mat-card-title>
-    <mat-card-content>
+<mat-card>
+  <mat-card-title>Simple card</mat-card-title>
+  <mat-card-content>
     <form *ngIf="userForm" class="edit-form" [formGroup]="userForm">
 
       <mat-grid-list cols="2" rowHeight="2:1">
@@ -43,20 +42,19 @@
             <mat-label>Address</mat-label>
             <input matInput formControlName="address">
           </mat-form-field>
-          <!-- <mat-form-field class="edit-form-full-width">
+          <mat-form-field class="edit-form-full-width">
             <mat-label>Status</mat-label>
             <input matInput formControlName="status">
-          </mat-form-field> -->
+          </mat-form-field>
 
         </mat-grid-tile>
       </mat-grid-list>
-  </form>
+    </form>
 
-</mat-card-content>
-    <mat-card-actions>
-      <button  mat-stroked-button >Back</button>
-  <button  mat-stroked-button (click)="save()">Save</button>
-    </mat-card-actions>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-stroked-button>Back</button>
+    <button mat-stroked-button (click)="save()">Save</button>
+  </mat-card-actions>
 
 </mat-card>
-

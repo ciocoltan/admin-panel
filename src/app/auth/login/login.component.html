@@ -28,9 +28,10 @@
     </mat-card-content>
 
     <mat-card-actions class="btn-logIn">
-      <button mat-raised-button color="primary" (click)="login()" [disabled]="!loginForm.valid || loading">Login</button>
+      <button mat-raised-button color="primary" (click)="login()"
+        [disabled]="!loginForm.valid || loading">Login</button>
 
-    <button mat-raised-button color="primary" (click)="signIn()" *ngIf="!loading">Sign In</button>
+      <button mat-raised-button color="primary" (click)="signIn()" *ngIf="!loading">Sign In</button>
     </mat-card-actions>
     <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
   </mat-card>

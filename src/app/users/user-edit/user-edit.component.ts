@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { UsersService } from "src/app/shared/services/users/users.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
@@ -20,7 +20,6 @@ export class UserEditComponent implements OnInit {
     this._userService
       .getCurrentUser(this.activatedRoute.snapshot.params.id)
       .subscribe(res => {
-        console.log(res);
         this.userForm = this.fb.group({
           first_name: res.result.first_name,
           last_name: res.result.last_name,
@@ -34,4 +33,5 @@ export class UserEditComponent implements OnInit {
         });
       });
   }
+  save() {}
 }

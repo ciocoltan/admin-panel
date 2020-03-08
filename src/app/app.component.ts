@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { LoginService } from "./shared/services/login.service";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = "admin-panel";
-  public isAuthenticated:boolean;
-  constructor(private _loginService: LoginService, private router:Router) {
+  public isAuthenticated: boolean;
+  constructor(private _loginService: LoginService, private router: Router) {
     this._loginService.isAuthenticated.subscribe(
-      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
+      (isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated)
     );
   }
   async ngOnInit() {

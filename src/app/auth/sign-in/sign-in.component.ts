@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
 import { LoginService } from "src/app/shared/services/login.service";
 import { CurrentUserModel } from "src/app/shared/models/CurrentUserModel";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
@@ -14,11 +13,7 @@ export class SignInComponent implements OnInit {
   public hide = true;
   public hideConfirm = true;
   public loading: boolean = false;
-  constructor(
-    private fb: FormBuilder,
-    private _loginService: LoginService,
-    private router: Router
-  ) {}
+  constructor(private fb: FormBuilder, private _loginService: LoginService) {}
 
   ngOnInit() {
     this.registerForm();
@@ -27,8 +22,22 @@ export class SignInComponent implements OnInit {
     this.signInForm = this.fb.group({
       userName: ["", [Validators.required]],
       password: ["", [Validators.required]],
-      passwordConfirm: [ "", [Validators.required, RxwebValidators.compare({ fieldName: "password" })]],
-      email: ["", [Validators.required]] //, Validators.pattern("[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}")
+      passwordConfirm: [
+        "",
+        [
+          Validators.required,
+          RxwebValidators.compare({ fieldName: "password" })
+        ]
+      ],
+      email: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+          )
+        ]
+      ]
     });
   }
 
@@ -38,7 +47,6 @@ export class SignInComponent implements OnInit {
       delete form.passwordConfirm;
       this.loading = true;
       this._loginService.register(form).subscribe(res => {
-        //console.log(res);
         this.loading = false;
       });
     }

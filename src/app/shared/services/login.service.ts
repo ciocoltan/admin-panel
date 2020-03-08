@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { Observable, BehaviorSubject } from "rxjs";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { CurrentUserModel } from "../models/CurrentUserModel";
 
 @Injectable({
@@ -9,12 +8,14 @@ import { CurrentUserModel } from "../models/CurrentUserModel";
 })
 export class LoginService {
   public isAuthenticated = new BehaviorSubject<boolean>(false);
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private router: Router) {}
 
   async checkAuthenticated() {
-     let authenticated:boolean;
+    let authenticated: boolean;
 
-     let usersArray: Array<CurrentUserModel> = JSON.parse(localStorage.getItem("users"));
+    let usersArray: Array<CurrentUserModel> = JSON.parse(
+      localStorage.getItem("users")
+    );
     if (usersArray) {
       let currentUser = JSON.parse(localStorage.getItem("currentUser"));
       if (currentUser) {
@@ -31,19 +32,8 @@ export class LoginService {
         console.log("nu autorizat");
       }
     }
-
-
-     this.isAuthenticated.next(authenticated);
-     return authenticated;
-
-
-
-
-
-
-
-    //console.log(isAuthenticated);
-
+    this.isAuthenticated.next(authenticated);
+    return authenticated;
   }
   login(form: CurrentUserModel) {
     let currentUser: boolean = false;
@@ -64,7 +54,6 @@ export class LoginService {
               this.router.navigate(["users"]);
             }
           });
-
           if (!currentUser) {
             alert("Login or password is invalid");
           }
@@ -75,11 +64,6 @@ export class LoginService {
       }, 1000);
     });
     return userObservable;
-    // getUser(id: string): Observable<UsersObjResModel> {
-    //     return this.http.get<UsersObjResModel>(`${this.url}/${id}`);
-    //   }
-    // localStorage.setItem('User', JSON.stringify(form));//il scrim
-    // return this.http.get<UsersResponseModel>(form);
   }
   register(form: CurrentUserModel) {
     let currentUser: boolean = false;

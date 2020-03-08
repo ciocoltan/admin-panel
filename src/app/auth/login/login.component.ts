@@ -21,7 +21,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ["", [Validators.required]], //, Validators.pattern("[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}")
+      email: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+          )
+        ]
+      ],
       password: ["", [Validators.required]]
     });
   }
@@ -29,10 +37,9 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.touched && this.loginForm.valid) {
       this.loading = true;
       this._loginService.login(this.loginForm.value).subscribe(res => {
-        //console.log(res);
         this.loading = false;
       });
-    } 
+    }
   }
   signIn() {
     this.router.navigate(["sign-in"], { relativeTo: this.activatedRoute });

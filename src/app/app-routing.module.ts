@@ -1,13 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthGuardService } from "./shared/guards/auth-guard.service";
-import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  // {
-  //   path:"",
-  //   component:AppComponent
-  // },
   {
     path: "",
     redirectTo: "login",
