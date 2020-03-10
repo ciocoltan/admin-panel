@@ -29,6 +29,7 @@
             <mat-list-item role="listitem">Name: {{user.first_name}}</mat-list-item>
             <mat-list-item role="listitem">Last name: {{user.last_name}}</mat-list-item>
             <mat-list-item role="listitem">Email: {{user.email}}</mat-list-item>
+            <mat-list-item role="listitem">Gender: {{user.gender}}</mat-list-item>
             <mat-list-item role="listitem">Address: {{user.address}}</mat-list-item>
             <mat-list-item role="listitem">Dob: {{user.dob}}</mat-list-item>
             <mat-list-item role="listitem">Phone: {{user.phone}}</mat-list-item>
@@ -38,11 +39,16 @@
 
         </mat-expansion-panel>
       </mat-accordion>
-      <mat-spinner *ngIf="!userDataArray"></mat-spinner>
+      <mat-spinner *ngIf="!userDataArray || loading" class="spinner"></mat-spinner>
 
     </mat-sidenav-content>
   </mat-sidenav-container>
 
-  <mat-toolbar class="example-footer">Footer</mat-toolbar>
+  <mat-toolbar class="footer-pagination">
+    <mat-paginator class="pagination" *ngIf="userDataArray" [length]="userDataArray._meta.totalCount"
+                   [pageSize]="userDataArray._meta.perPage" [showFirstLastButtons]="true"
+                   (page)="pageEvent = onChangePage($event)">
+    </mat-paginator>
+  </mat-toolbar>
 
 </mat-card-content>

@@ -15,4 +15,7 @@ export class UsersService {
   getCurrentUser(id: string): Observable<UsersResponseModel> {
     return this.http.get<UsersResponseModel>(`/users/${id}`);
   }
+  getPagesusers(pageNum: number): Observable<UsersResponseModel> {
+    return this.http.get<UsersResponseModel>(`/users?page=${pageNum}`);
+  }
 }
