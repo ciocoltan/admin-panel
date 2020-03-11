@@ -35,12 +35,12 @@ export class UsersListComponent implements OnInit {
     this.router.navigate(["edit", id], { relativeTo: this.activatedRoute });
   }
 
-  onChangePage(event: PageEvent) {
+  onChangePage(event: PageEvent): PageEvent {
     this.loading = true;
-    this._usersService.getPagesusers(event.pageIndex + 1).subscribe(res => {
+    this._usersService.getPagesUsers(event.pageIndex + 1).subscribe(res => {
       this.userDataArray = res;
       this.loading = false;
     });
-    console.log(event);
+    return event;
   }
 }

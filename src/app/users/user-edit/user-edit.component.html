@@ -1,60 +1,88 @@
-<mat-card>
-  <mat-card-title>Simple card</mat-card-title>
-  <mat-card-content>
-    <form *ngIf="userForm" class="edit-form" [formGroup]="userForm">
+<mat-card *ngIf="userForm">
+  <mat-card-title>Update user: {{currentUser.first_name}} {{currentUser.last_name}}</mat-card-title>
+  <mat-card-content class="main-container">
+    <form class="edit-form" [formGroup]="userForm">
+      <div class="edit-form-content left">
 
-      <mat-grid-list cols="2" rowHeight="2:1">
-        <mat-grid-tile class="user-edit-grid-list">
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>User name</mat-label>
+          <input matInput formControlName="first_name">
+          <mat-error *ngIf="userForm.controls.first_name.hasError('minLength')">
+            {{validationMassege.first_name.minlength}}
+          </mat-error>
+          <mat-error *ngIf="userForm.controls.first_name.hasError('required')">
+            {{validationMassege.first_name.required}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>Last name</mat-label>
+          <input matInput formControlName="last_name">
+          <mat-error *ngIf="userForm.controls.last_name.hasError('minLength')">
+            {{validationMassege.last_name.minlength}}
+          </mat-error>
+          <mat-error *ngIf="userForm.controls.last_name.hasError('required')">
+            {{validationMassege.last_name.required}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option *ngFor="let food of genderUser" [value]="food">
+              {{food| titlecase}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>Dob</mat-label>
+          <input matInput formControlName="dob">
+        </mat-form-field>
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+          <mat-error *ngIf="userForm.controls.email.hasError('required')">
+            {{validationMassege.email.required}}
+          </mat-error>
+          <mat-error *ngIf="userForm.controls.email.hasError('pattern')">
+            {{validationMassege.email.pattern}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="edit-form-content right">
 
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>User name</mat-label>
-            <input matInput formControlName="first_name">
-          </mat-form-field>
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>Last name</mat-label>
-            <input matInput formControlName="last_name">
-          </mat-form-field>
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>Gender</mat-label>
-            <input matInput formControlName="gender">
-          </mat-form-field>
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>Dob</mat-label>
-            <input matInput formControlName="dob">
-          </mat-form-field>
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone">
+          <mat-error *ngIf="userForm.controls.phone.hasError('required')">
+            {{validationMassege.phone.required}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>Web site</mat-label>
+          <input matInput formControlName="website">
+        </mat-form-field>
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address">
+          <mat-error *ngIf="userForm.controls.address.hasError('required')">
+            {{validationMassege.address.required}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="edit-form-full-width">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statusUser" [value]="status">
+              {{status| titlecase}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        </mat-grid-tile>
-         <mat-grid-tile class="user-edit-grid-list">
-
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email">
-          </mat-form-field>
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>Phone</mat-label>
-            <input matInput formControlName="phone">
-          </mat-form-field>
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>Web site</mat-label>
-            <input matInput formControlName="website">
-          </mat-form-field>
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>Address</mat-label>
-            <input matInput formControlName="address">
-          </mat-form-field>
-          <mat-form-field class="edit-form-full-width">
-            <mat-label>Status</mat-label>
-            <input matInput formControlName="status">
-          </mat-form-field>
-
-        </mat-grid-tile>
-      </mat-grid-list>
-
+      </div>
+      <mat-spinner *ngIf="!userForm || loading" class="spinner"></mat-spinner>
     </form>
 
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-stroked-button>Back</button>
+  <mat-card-actions class="btn-edit-user">
+    <button mat-stroked-button (click)="back()">Back</button>
     <button mat-stroked-button (click)="save()">Save</button>
   </mat-card-actions>
 

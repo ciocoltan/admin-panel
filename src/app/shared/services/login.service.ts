@@ -56,7 +56,7 @@ export class LoginService {
           });
           if (!currentUser) {
             this._snackBar.open("Username or password is incorrect!", "Close", {
-              panelClass: ["mat-snack-bar-container"]
+              panelClass: ["mat-snack-bar-containerng"]
             });
           }
         } else {
