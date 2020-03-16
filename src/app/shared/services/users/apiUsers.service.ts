@@ -6,7 +6,7 @@ import { UsersResponseModel } from "../../models/UsersResponseModel";
 @Injectable({
   providedIn: "root"
 })
-export class UsersService {
+export class ApiUsersService {
   public url: string = "/users";
   constructor(private http: HttpClient) {}
 
@@ -19,9 +19,9 @@ export class UsersService {
   getPagesUsers(pageNum: number): Observable<UsersResponseModel> {
     return this.http.get<UsersResponseModel>(`${this.url}?page=${pageNum}`);
   }
-  // deleteUser(id: string): Observable<UsersObjResModel> {
-  //   return this.http.delete<UsersObjResModel>(`${this.url}/${id}`);
-  // }
+  deleteUser(id: string): Observable<UsersResponseModel> {
+    return this.http.delete<UsersResponseModel>(`${this.url}/${id}`);
+  }
   editForm(id: string, form: UsersResponseModel) {
     return this.http.put<UsersResponseModel>(`${this.url}/${id}`, form);
   }

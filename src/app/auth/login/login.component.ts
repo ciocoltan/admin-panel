@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { LoginService } from "src/app/shared/services/login.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { UserService } from 'src/app/shared/services/users/user.service';
 
 @Component({
   selector: "app-login",
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private _loginService: LoginService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private _userService:UserService
   ) {}
 
   ngOnInit() {
@@ -34,10 +36,11 @@ export class LoginComponent implements OnInit {
     });
   }
   login() {
-    if (this.loginForm.touched && this.loginForm.valid) {
+    if (this.loginForm.dirty && this.loginForm.valid) {
       this.loading = true;
       this._loginService.login(this.loginForm.value).subscribe(res => {
         this.loading = false;
+        // this._userService.responseControl(res);
       });
     }
   }

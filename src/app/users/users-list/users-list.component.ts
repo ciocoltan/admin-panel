@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { UsersService } from "src/app/shared/services/users/users.service";
+import { ApiUsersService } from "src/app/shared/services/users/apiUsers.service";
 import { UsersResponseModel } from "src/app/shared/models/UsersResponseModel";
 import { CurrentUserModel } from "src/app/shared/models/CurrentUserModel";
 import { PageEvent } from "@angular/material/paginator";
+import { UserService } from "src/app/shared/services/users/user.service";
 
 @Component({
   selector: "app-users-list",
@@ -17,29 +18,48 @@ export class UsersListComponent implements OnInit {
   public loading: boolean = false;
   constructor(
     private router: Router,
-    private _usersService: UsersService,
-    private activatedRoute: ActivatedRoute
+    private _apiUserService: ApiUsersService,
+    private activatedRoute: ActivatedRoute,
+    private _userService: UserService
   ) {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
   }
 
   ngOnInit() {
-    this._usersService.getUsers().subscribe(res => {
+    this.showUsers();
+  }
+
+  showUsers() {
+    this._apiUserService.getUsers().subscribe(res => {
       this.userDataArray = res;
     });
   }
 
-  edituser(id: string, event: Event) {
+  editUser(id: string, event: Event) {
     event.preventDefault();
     event.stopPropagation();
     this.router.navigate(["edit", id], { relativeTo: this.activatedRoute });
   }
 
+  deleteUser(id: string, event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    let confirmDelete = confirm("Are you sure you want to delete this item?");
+    if (confirmDelete) {
+      this.loading = !this.loading;
+      this._apiUserService.deleteUser(id).subscribe(res => {
+        this._userService.responseControl(res);
+        this.showUsers();
+        this.loading = !this.loading;
+      });
+    }
+  }
+
   onChangePage(event: PageEvent): PageEvent {
-    this.loading = true;
-    this._usersService.getPagesUsers(event.pageIndex + 1).subscribe(res => {
+    this.loading = !this.loading;
+    this._apiUserService.getPagesUsers(event.pageIndex + 1).subscribe(res => {
       this.userDataArray = res;
-      this.loading = false;
+      this.loading = !this.loading;
     });
     return event;
   }

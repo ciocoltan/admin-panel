@@ -42,7 +42,7 @@ export class SignInComponent implements OnInit {
   }
 
   signIn() {
-    if (this.signInForm.touched && this.signInForm.valid) {
+    if (this.signInForm.dirty && this.signInForm.valid) {
       let form: CurrentUserModel = this.signInForm.value;
       delete form.passwordConfirm;
       this.loading = true;

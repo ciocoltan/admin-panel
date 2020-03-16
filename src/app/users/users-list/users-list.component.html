@@ -1,8 +1,6 @@
-<mat-toolbar class="header">Hello {{currentUser.userName}}
-</mat-toolbar>
+<mat-toolbar class="header">Hello {{ currentUser.userName }} </mat-toolbar>
 <mat-card>Simple card</mat-card>
 <mat-card-content>
-
   <mat-toolbar class="example-header">
     <button mat-button (click)="sidenav.toggle()">Side Menu</button>
   </mat-toolbar>
@@ -12,43 +10,42 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="main-container">
-
       <mat-accordion *ngIf="userDataArray" class="accordion">
         <mat-expansion-panel *ngFor="let user of userDataArray.result">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{user.first_name}} {{user.last_name}}
+              {{ user.first_name }} {{ user.last_name }}
             </mat-panel-title>
             <mat-panel-description>
-              {{user.email}}
+              {{ user.email }}
             </mat-panel-description>
-            <button class="btn-edit" mat-stroked-button (click)="edituser(user.id,$event)">Edit</button>
+            <button mat-stroked-button (click)="deleteUser(user.id,$event)">
+              <i class="material-icons">delete</i>
+            </button>
+            <button class="btn-edit" mat-stroked-button (click)="editUser(user.id, $event)"><i class="material-icons">edit</i></button>
           </mat-expansion-panel-header>
 
           <mat-list role="list">
-            <mat-list-item role="listitem">Name: {{user.first_name}}</mat-list-item>
-            <mat-list-item role="listitem">Last name: {{user.last_name}}</mat-list-item>
-            <mat-list-item role="listitem">Email: {{user.email}}</mat-list-item>
-            <mat-list-item role="listitem">Gender: {{user.gender}}</mat-list-item>
-            <mat-list-item role="listitem">Address: {{user.address}}</mat-list-item>
-            <mat-list-item role="listitem">Dob: {{user.dob}}</mat-list-item>
-            <mat-list-item role="listitem">Phone: {{user.phone}}</mat-list-item>
-            <mat-list-item role="listitem">Website: &#160; <a href="{{user.website}}">{{user.website}}</a>
+            <mat-list-item role="listitem">Name: {{ user.first_name }}</mat-list-item>
+            <mat-list-item role="listitem">Last name: {{ user.last_name }}</mat-list-item>
+            <mat-list-item role="listitem">Email: {{ user.email }}</mat-list-item>
+            <mat-list-item role="listitem">Gender: {{ user.gender }}</mat-list-item>
+            <mat-list-item role="listitem">Address: {{ user.address }}</mat-list-item>
+            <mat-list-item role="listitem">Dob: {{ user.dob }}</mat-list-item>
+            <mat-list-item role="listitem">Phone: {{ user.phone }}</mat-list-item>
+            <mat-list-item role="listitem">Website: &#160;
+              <a href="{{ user.website }}">{{ user.website }}</a>
             </mat-list-item>
           </mat-list>
-
         </mat-expansion-panel>
       </mat-accordion>
       <mat-spinner *ngIf="!userDataArray || loading" class="spinner"></mat-spinner>
-
     </mat-sidenav-content>
   </mat-sidenav-container>
 
   <mat-toolbar class="footer-pagination">
     <mat-paginator class="pagination" *ngIf="userDataArray" [length]="userDataArray._meta.totalCount"
-                   [pageSize]="userDataArray._meta.perPage" [showFirstLastButtons]="true"
-                   (page)="pageEvent = onChangePage($event)">
+      [pageSize]="userDataArray._meta.perPage" [showFirstLastButtons]="true" (page)="pageEvent = onChangePage($event)">
     </mat-paginator>
   </mat-toolbar>
-
 </mat-card-content>
