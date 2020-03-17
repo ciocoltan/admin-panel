@@ -1,20 +1,22 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiUsersService } from "src/app/shared/services/users/apiUsers.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { UserModel } from "src/app/shared/models/UserModel";
 import { UserService } from "src/app/shared/services/users/user.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-user-edit",
   templateUrl: "./user-edit.component.html",
   styleUrls: ["./user-edit.component.scss"]
 })
-export class UserEditComponent implements OnInit {
+export class UserEditComponent implements OnInit, OnDestroy {
   public userForm: FormGroup;
   public loading: boolean = false;
   public currentUser: UserModel;
+  private unSubscribe: Subscription = new Subscription();
   public statusUser: Array<string> = ["active", "inactive"];
   public genderUser: Array<string> = ["male", "female"];
   public validationMassege = {
@@ -50,52 +52,79 @@ export class UserEditComponent implements OnInit {
   ngOnInit() {
     this.userEditForm();
   }
+
   userEditForm() {
     this.loading = !this.loading;
-    this._apiUserService
-      .getCurrentUser(this.activatedRoute.snapshot.params.id)
-      .subscribe(res => {
-        this.loading = !this.loading;
-        this.currentUser = res.result;
-        this.userForm = this.fb.group({
-          first_name: [
-            this.currentUser.first_name,
-            [Validators.minLength(3), Validators.required]
-          ],
-          last_name: [
-            this.currentUser.last_name,
-            [Validators.minLength(3), Validators.required]
-          ],
-          gender: [this.currentUser.gender],
-          dob: [this.currentUser.dob],
-          email: [
-            this.currentUser.email,
-            [
-              Validators.required,
-              Validators.pattern(
-                "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-              )
-            ]
-          ],
-          phone: [this.currentUser.phone, [Validators.required]],
-          website: [this.currentUser.website],
-          address: [this.currentUser.address, [Validators.required]],
-          status: [this.currentUser.status]
-        });
-      });
+    let userId = this.activatedRoute.snapshot.params.id;
+    if (userId) {
+      this.unSubscribe.add(
+        this._apiUserService
+          .getCurrentUser(this.activatedRoute.snapshot.params.id)
+          .subscribe(res => {
+            this.editForm(res.result);
+          })
+      );
+    } else {
+      this.unSubscribe.add(
+        this._apiUserService.getUsers().subscribe(res => {
+          this.editForm(res.result[0]);
+        })
+      );
+    }
   }
+
+  editForm(res: UserModel) {
+    this.loading = !this.loading;
+    this.currentUser = res;
+    this.userForm = this.fb.group({
+      first_name: [
+        this.currentUser.first_name,
+        [Validators.minLength(3), Validators.required]
+      ],
+      last_name: [
+        this.currentUser.last_name,
+        [Validators.minLength(3), Validators.required]
+      ],
+      gender: [this.currentUser.gender],
+      dob: [this.currentUser.dob],
+      email: [
+        this.currentUser.email,
+        [
+          Validators.required,
+          Validators.pattern(
+            "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+          )
+        ]
+      ],
+      phone: [this.currentUser.phone, [Validators.required]],
+      website: [this.currentUser.website],
+      address: [this.currentUser.address, [Validators.required]],
+      status: [this.currentUser.status]
+    });
+  }
+
   saveUserEdit() {
     if (this.userForm.dirty && this.userForm.valid) {
       let userId = this.activatedRoute.snapshot.params.id;
-      // console.log(this.userForm);
-      this.loading = !this.loading;
-      this._apiUserService
-        .editForm(userId, this.userForm.value)
-        .subscribe(res => {
-          // console.log(res);
-          this.loading = !this.loading;
-          this._userService.responseControl(res);
-        });
+      if (userId) {
+        this.loading = !this.loading;
+        this.unSubscribe.add(
+          this._apiUserService
+            .editForm(userId, this.userForm.value)
+            .subscribe(res => {
+              this.loading = !this.loading;
+              this._userService.responseControl(res);
+            })
+        );
+      } else {
+        this.unSubscribe.add(
+          this._apiUserService
+            .addNewUser(this.userForm.value)
+            .subscribe(res => {
+              this._userService.responseControl(res);
+            })
+        );
+      }
     } else {
       this._snackBar.open("Not made any changes to the page!", "Close", {
         panelClass: ["mat-snack-bar-containerng"]
@@ -105,5 +134,9 @@ export class UserEditComponent implements OnInit {
 
   back() {
     this.router.navigate(["users"]);
+  }
+
+  ngOnDestroy() {
+    this.unSubscribe.unsubscribe();
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { UsersResponseModel } from "../../models/UsersResponseModel";
+import { SentUserModel } from '../../models/SentUserModel';
 
 @Injectable({
   providedIn: "root"
@@ -25,7 +26,7 @@ export class ApiUsersService {
   editForm(id: string, form: UsersResponseModel) {
     return this.http.put<UsersResponseModel>(`${this.url}/${id}`, form);
   }
-  // addForm(form: SentUserModel) {
-  //   return this.http.post<UsersObjResModel>( form);
-  // }
+  addNewUser(form: UsersResponseModel) {
+    return this.http.post<UsersResponseModel>(this.url, form);
+  }
 }

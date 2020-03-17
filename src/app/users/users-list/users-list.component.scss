@@ -6,6 +6,11 @@
   justify-content: space-between;
 }
 
+.card {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .sidenav-container {
   width: 100%;
   //height: 100%;
@@ -28,11 +33,19 @@
     .accordion {
       width: 100%;
 
+      .mat-expansion-panel-header-description,
+      .mat-expansion-panel-header-title {
+        display: flex;
+        flex: 1;
+        margin-right: 16px;
+      }
+
       .btn-edit {
         margin: 0 20px;
       }
     }
-    .spinner{
+
+    .spinner {
       position: absolute;
     }
 

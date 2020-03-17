@@ -1,5 +1,7 @@
 <mat-toolbar class="header">Hello {{ currentUser.userName }} </mat-toolbar>
-<mat-card>Simple card</mat-card>
+<mat-card class="card">
+  <button mat-button color="primary" (click)="newUser()">New User</button>
+</mat-card>
 <mat-card-content>
   <mat-toolbar class="example-header">
     <button mat-button (click)="sidenav.toggle()">Side Menu</button>
@@ -22,7 +24,8 @@
             <button mat-stroked-button (click)="deleteUser(user.id,$event)">
               <i class="material-icons">delete</i>
             </button>
-            <button class="btn-edit" mat-stroked-button (click)="editUser(user.id, $event)"><i class="material-icons">edit</i></button>
+            <button class="btn-edit" mat-stroked-button (click)="editUser(user.id, $event)"><i
+                class="material-icons">edit</i></button>
           </mat-expansion-panel-header>
 
           <mat-list role="list">
