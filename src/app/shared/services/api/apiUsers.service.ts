@@ -2,13 +2,14 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { UsersResponseModel } from "../../models/UsersResponseModel";
-import { SentUserModel } from '../../models/SentUserModel';
+import { PostsResponseModel } from "../../models/PostsResponseModel";
 
 @Injectable({
   providedIn: "root"
 })
 export class ApiUsersService {
   public url: string = "/users";
+  public postUrl: string = "/posts";
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<UsersResponseModel> {
@@ -28,5 +29,23 @@ export class ApiUsersService {
   }
   addNewUser(form: UsersResponseModel) {
     return this.http.post<UsersResponseModel>(this.url, form);
+  }
+  getPosts(): Observable<PostsResponseModel> {
+    return this.http.get<PostsResponseModel>(this.postUrl);
+  }
+  getPagesPosts(pageNum: number): Observable<PostsResponseModel> {
+    return this.http.get<PostsResponseModel>(`${this.postUrl}?page=${pageNum}`);
+  }
+  deletePost(id: string): Observable<PostsResponseModel> {
+    return this.http.delete<PostsResponseModel>(`${this.postUrl}/${id}`);
+  }
+  getCurrentPost(id: string): Observable<PostsResponseModel> {
+    return this.http.get<PostsResponseModel>(`${this.postUrl}/${id}`);
+  }
+  postEditForm(id: string, form: PostsResponseModel) {
+    return this.http.put<PostsResponseModel>(`${this.postUrl}/${id}`, form);
+  }
+  addNewPost(form: PostsResponseModel) {
+    return this.http.post<PostsResponseModel>(this.postUrl, form);
   }
 }

@@ -1,0 +1,39 @@
+<div class="container">
+  <mat-card *ngIf="postForm">
+    <mat-card-title>Update Post: {{currentPost.title}} </mat-card-title>
+    <mat-card-content class="main-container">
+      <form class="edit-form" [formGroup]="postForm">
+        <div class="edit-form-content left">
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>User Id</mat-label>
+            <input matInput formControlName="user_id">
+            <mat-error *ngIf="postForm.controls.user_id.hasError('required')">
+              {{validationMassege.id.required}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Post Title</mat-label>
+            <input matInput formControlName="title">
+            <mat-error *ngIf="postForm.controls.title.hasError('required')">
+              {{validationMassege.title.required}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="edit-form-full-width">
+            <mat-label>Body</mat-label>
+            <textarea matInput [matTextareaAutosize] formControlName="body"></textarea>
+            <mat-error *ngIf="postForm.controls.body.hasError('required')">
+              {{validationMassege.body.required}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+
+    </mat-card-content>
+    <mat-card-actions class="btn-edit-user">
+      <button mat-stroked-button color="primary" (click)="back()">Back</button>
+      <button mat-stroked-button color="primary" (click)="saveUserEdit()">Save</button>
+    </mat-card-actions>
+
+  </mat-card>
+  <mat-spinner *ngIf="!postForm || loading" class="spinner"></mat-spinner>
+</div>

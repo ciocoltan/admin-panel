@@ -1,7 +1,7 @@
-import { UserModel } from "./UserModel";
+import { PostModel } from "./PostModel";
 
-export class UsersObjResModel {
-  result: UserModel;
+export class PostsResponseModel {
+  result: Array<PostModel> & PostModel;
   _meta: {
     success: boolean;
     code: number;

@@ -1,0 +1,35 @@
+<div *ngIf="userDataArray">
+  <mat-expansion-panel *ngFor="let user of userDataArray.result">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ user.first_name }} {{ user.last_name }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ user.email }}
+      </mat-panel-description>
+      <button mat-stroked-button (click)="deleteUser(user.id,$event)">
+        <i class="material-icons">delete</i>
+      </button>
+      <button class="btn-edit" mat-stroked-button (click)="editUser(user.id, $event)"><i
+          class="material-icons">edit</i></button>
+    </mat-expansion-panel-header>
+    <mat-list role="list">
+      <mat-list-item role="listitem"><strong>Name: &#160;</strong> {{ user.first_name }}</mat-list-item>
+      <mat-list-item role="listitem"><strong>Last name: &#160;</strong> {{ user.last_name }}</mat-list-item>
+      <mat-list-item role="listitem"><strong>Email: &#160;</strong> {{ user.email }}</mat-list-item>
+      <mat-list-item role="listitem"><strong>Gender: &#160;</strong> {{ user.gender | titlecase }}</mat-list-item>
+      <mat-list-item role="listitem"><strong>Address: &#160;</strong> {{ user.address }}</mat-list-item>
+      <mat-list-item role="listitem"><strong>Dob: &#160;</strong> {{ user.dob }}</mat-list-item>
+      <mat-list-item role="listitem"><strong>Phone: &#160;</strong> {{ user.phone }}</mat-list-item>
+      <mat-list-item role="listitem"><strong>Website: &#160;</strong> <a
+          href="{{ user.website }}">{{ user.website }}</a>
+      </mat-list-item>
+    </mat-list>
+  </mat-expansion-panel>
+</div>
+<mat-spinner *ngIf="!userDataArray || loading" class="spinner"></mat-spinner>
+<mat-toolbar class="footer-pagination">
+  <mat-paginator class="pagination" *ngIf="userDataArray" [length]="userDataArray._meta.totalCount"
+    [pageSize]="userDataArray._meta.perPage" [showFirstLastButtons]="true" (page)="pageEvent = onChangePage($event)">
+  </mat-paginator>
+</mat-toolbar>

@@ -49,7 +49,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       delete form.passwordConfirm;
       this.loading = true;
       this.unSubscribe.add(
-      this._loginService.register(form).subscribe(res => {
+      this._loginService.register(form).subscribe(() => {
         this.loading = false;
       }));
     }
@@ -57,6 +57,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unSubscribe.unsubscribe();
+
   }
 
 }

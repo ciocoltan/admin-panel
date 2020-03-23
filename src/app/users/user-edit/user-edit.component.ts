@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ApiUsersService } from "src/app/shared/services/users/apiUsers.service";
+import { ApiUsersService } from "src/app/shared/services/api/apiUsers.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { UserModel } from "src/app/shared/models/UserModel";
@@ -16,6 +16,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   public userForm: FormGroup;
   public loading: boolean = false;
   public currentUser: UserModel;
+  public userId: string;
   private unSubscribe: Subscription = new Subscription();
   public statusUser: Array<string> = ["active", "inactive"];
   public genderUser: Array<string> = ["male", "female"];
@@ -50,19 +51,17 @@ export class UserEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.userEditForm();
+    this.placeholderUserEditForm();
   }
 
-  userEditForm() {
+  placeholderUserEditForm() {
     this.loading = !this.loading;
-    let userId = this.activatedRoute.snapshot.params.id;
-    if (userId) {
+    this.userId = this.activatedRoute.snapshot.params.id;
+    if (this.userId) {
       this.unSubscribe.add(
-        this._apiUserService
-          .getCurrentUser(this.activatedRoute.snapshot.params.id)
-          .subscribe(res => {
-            this.editForm(res.result);
-          })
+        this._apiUserService.getCurrentUser(this.userId).subscribe(res => {
+          this.editForm(res.result);
+        })
       );
     } else {
       this.unSubscribe.add(
@@ -105,15 +104,16 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   saveUserEdit() {
     if (this.userForm.dirty && this.userForm.valid) {
-      let userId = this.activatedRoute.snapshot.params.id;
-      if (userId) {
+      // let userId = this.activatedRoute.snapshot.params.id;
+      if (this.userId) {
         this.loading = !this.loading;
         this.unSubscribe.add(
           this._apiUserService
-            .editForm(userId, this.userForm.value)
+            .editForm(this.userId, this.userForm.value)
             .subscribe(res => {
               this.loading = !this.loading;
               this._userService.responseControl(res);
+              this.router.navigate(["users"]);
             })
         );
       } else {
@@ -121,7 +121,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
           this._apiUserService
             .addNewUser(this.userForm.value)
             .subscribe(res => {
+              this.loading = !this.loading;
               this._userService.responseControl(res);
+              this.router.navigate(["users"]);
             })
         );
       }

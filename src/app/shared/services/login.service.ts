@@ -38,7 +38,7 @@ export class LoginService {
   login(form: CurrentUserModel) {
     let currentUser: boolean = false;
     const userObservable = new Observable<CurrentUserModel>(observer => {
-      setTimeout(() => {
+      let observerUnsubscribe = setTimeout(() => {
         observer.next(form);
         let usersArray: Array<CurrentUserModel> = JSON.parse(
           localStorage.getItem("users")
@@ -70,13 +70,16 @@ export class LoginService {
           this.router.navigate(["login/sign-in"]);
         }
       }, 1000);
+      return () => {
+        clearTimeout(observerUnsubscribe);
+      };
     });
     return userObservable;
   }
   register(form: CurrentUserModel) {
     let currentUser: boolean = false;
     const userObservable = new Observable<CurrentUserModel>(observer => {
-      setTimeout(() => {
+      let observerUnsubscribe = setTimeout(() => {
         observer.next(form);
         let usersArray: Array<CurrentUserModel> = JSON.parse(
           localStorage.getItem("users")
@@ -104,6 +107,9 @@ export class LoginService {
           this.router.navigate(["login"]);
         }
       }, 1000);
+      return () => {
+        clearTimeout(observerUnsubscribe);
+      };
     });
     return userObservable;
   }
