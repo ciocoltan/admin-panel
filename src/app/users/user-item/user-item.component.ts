@@ -47,7 +47,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
       this.unSubscribe.add(
         this._apiUserService.deleteUser(id).subscribe(res => {
           this._userService.responseControl(res);
-          this.showUsers();
+          this.pageEvent ? this.onChangePage(this.pageEvent) : this.showUsers();
           this.loading = !this.loading;
         })
       );

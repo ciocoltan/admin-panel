@@ -11,7 +11,7 @@ export class HomeComponent {
   public currentUser: CurrentUserModel;
   public url: string;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(public router: Router, private activatedRoute: ActivatedRoute) {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
   }
 

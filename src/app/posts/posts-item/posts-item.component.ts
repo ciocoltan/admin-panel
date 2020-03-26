@@ -60,7 +60,7 @@ export class PostsItemComponent implements OnInit, OnDestroy {
       this.unSubscribe.add(
         this._apiUserService.deletePost(id).subscribe(res => {
           this._postService.responseControl(res);
-          this.showUsersPosts();
+          (this.pageEvent) ?  this.onChangePage(this.pageEvent)  : this.showUsersPosts()
           this.loading = !this.loading;
         })
       );
