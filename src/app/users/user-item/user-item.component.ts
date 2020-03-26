@@ -15,6 +15,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
   public userDataArray: UsersResponseModel;
   public loading: boolean = false;
   private unSubscribe: Subscription = new Subscription();
+  public pageEvent: PageEvent;
   constructor(
     private router: Router,
     private _apiUserService: ApiUsersService,

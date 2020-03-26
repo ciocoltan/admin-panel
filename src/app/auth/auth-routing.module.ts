@@ -6,11 +6,13 @@ import { SignInComponent } from "./sign-in/sign-in.component";
 const routes: Routes = [
   {
     path: "",
-    component: LoginComponent
+    component: LoginComponent,
+    data: { breadcrumb: "null" }
   },
   {
     path: "sign-in",
-    component: SignInComponent
+    component: SignInComponent,
+    data: { breadcrumb: "SignIn" }
   }
 ];
 

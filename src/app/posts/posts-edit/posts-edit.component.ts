@@ -26,7 +26,7 @@ export class PostsEditComponent implements OnInit, OnDestroy {
       required: "Post title is required"
     },
     body: {
-      required: "Post text is required"
+      required: "Body text is required"
     }
   };
 
@@ -81,7 +81,7 @@ export class PostsEditComponent implements OnInit, OnDestroy {
             .subscribe(res => {
               this.loading = !this.loading;
               this._postService.responseControl(res);
-              this.router.navigate(["users/posts"]);
+              this.router.navigate(["home/posts"]);
             })
         );
       } else {
@@ -91,7 +91,7 @@ export class PostsEditComponent implements OnInit, OnDestroy {
             .subscribe(res => {
               this.loading = !this.loading;
               this._postService.responseControl(res);
-              this.router.navigate(["users/posts"]);
+              this.router.navigate(["home/posts"]);
             })
         );
       }
@@ -103,7 +103,7 @@ export class PostsEditComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(["users/posts"]);
+    this.router.navigate(["home/posts"]);
   }
 
   ngOnDestroy() {

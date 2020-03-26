@@ -6,9 +6,8 @@
   justify-content: space-between;
 }
 
-.card {
-  display: flex;
-  justify-content: flex-end;
+.divider {
+  border-top-color: rgba(0, 0, 0, -36);
 }
 
 .sidenav-container {
@@ -19,12 +18,10 @@
   }
 
   .main-container {
-    // width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 400px;
-    padding-top: 5px;
 
     .accordion {
       width: 100%;
@@ -32,4 +29,3 @@
   }
 
 }
-

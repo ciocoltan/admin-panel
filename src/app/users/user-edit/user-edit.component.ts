@@ -113,7 +113,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
             .subscribe(res => {
               this.loading = !this.loading;
               this._userService.responseControl(res);
-              this.router.navigate(["users"]);
+              this.router.navigate(["home/users"]);
             })
         );
       } else {
@@ -123,7 +123,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
             .subscribe(res => {
               this.loading = !this.loading;
               this._userService.responseControl(res);
-              this.router.navigate(["users"]);
+              this.router.navigate(["home/users"]);
             })
         );
       }
@@ -135,7 +135,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(["users"]);
+    this.router.navigate(["home/users"]);
   }
 
   ngOnDestroy() {

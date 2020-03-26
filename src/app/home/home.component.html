@@ -1,0 +1,46 @@
+<breadcrumb #parent>
+  <ol class="breadcrumb">
+    <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
+      <li *ngIf="!route.terminal">
+        <a [routerLink]="[route.url]">{{ route.displayName }}</a>
+      </li>
+      <li *ngIf="route.terminal" class=" active" aria-current="page">{{ route.displayName}}
+      </li>
+    </ng-template>
+  </ol>
+</breadcrumb>
+<mat-toolbar class="header">Hello {{ currentUser.userName }}
+  <button *ngIf=" (router.url | slice:0:11) ==='/home/users'" mat-stroked-button color="primary" (click)="newUser()">New
+    User</button>
+  <button *ngIf=" (router.url | slice:0:11) ==='/home/posts'" mat-stroked-button color="primary" (click)="newPost()">New
+    Post</button>
+</mat-toolbar>
+
+<mat-card-content>
+  <mat-card>
+    <button mat-button (click)="sidenav.toggle()">Side Menu</button>
+  </mat-card>
+<mat-divider class="divider"></mat-divider>
+  <mat-sidenav-container class="sidenav-container">
+
+    <mat-sidenav #sidenav mode="side" opened class="sidenav">
+
+      <mat-list>
+        <mat-list-item routerLink="users">Users list</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item routerLink="posts">Posts</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Item 3</mat-list-item>
+      </mat-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-container">
+      <mat-accordion class="accordion">
+
+        <router-outlet></router-outlet>
+
+      </mat-accordion>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</mat-card-content>

@@ -8,16 +8,19 @@ import { AngularMaterialModule } from "./cors/angular-material/angular-material.
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { JwtInterceptor } from "./shared/interceptor/JwtInterceptor";
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/material/snack-bar";
+import { BreadcrumbModule } from "angular-crumbs";
+import { HomeComponent } from "./home/home.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
     AngularMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    BreadcrumbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
